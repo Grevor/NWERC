@@ -1,5 +1,6 @@
 package NWERC2012;
 import java.util.ArrayList;
+import io.Kattio;
 
 
 public class Idol {
