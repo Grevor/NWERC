@@ -10,8 +10,11 @@ public class EdgeGraph implements Graph {
 	private static final int estimatedEdges = 100;
 	ArrayList<Node> allNodes;
 	
-	public EdgeGraph(int estimatedNodes) {
-		this.allNodes = new ArrayList<Node>(estimatedNodes);
+	public EdgeGraph(int numberOfNodes) {
+		this.allNodes = new ArrayList<Node>(numberOfNodes);
+		for(int i = 0; i < numberOfNodes; i++) {
+			this.addNode();
+		}
 	}
 	
 	public void addNode() {
