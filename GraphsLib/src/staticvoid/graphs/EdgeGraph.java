@@ -46,6 +46,7 @@ public class EdgeGraph implements Graph {
 		
 		while(!queue.isEmpty()) {
 			currentNode = queue.poll();
+			visited[currentNode] = true;
 			if(currentNode == endID) {
 				ArrayList<Integer> way = new ArrayList<Integer>();
 				way.add(endID);
@@ -66,7 +67,6 @@ public class EdgeGraph implements Graph {
 							distance[currentNode] + currentEdge.getWeight(); 
 					queue.add(currentEdge.targetNode.nodeID);
 					prevNode[currentEdge.targetNode.nodeID] = allNodes.get(currentNode);
-					visited[currentEdge.getTargetNode().nodeID] = true;
 				}
 			}
 		}
