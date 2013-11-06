@@ -2,6 +2,7 @@ package staticvoid.graphs;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.PriorityQueue;
 
 public class EdgeGraph implements Graph {
@@ -46,9 +47,11 @@ public class EdgeGraph implements Graph {
 			currentNode = queue.poll();
 			if(currentNode == endID) {
 				ArrayList<Integer> way = new ArrayList<Integer>();
+				way.add(endID);
 				double cost = distance[currentNode];
 				while(currentNode != startID) {
 					way.add(prevNode[currentNode].nodeID);
+					currentNode = prevNode[currentNode].nodeID;
 				}
 				return new ShortestWay(way, cost);
 			}
@@ -139,5 +142,28 @@ public class EdgeGraph implements Graph {
 	
 	public static void main(String[] args) {
 		EdgeGraph g = new EdgeGraph(10);
+		g.addNode();
+		g.addNode();
+		g.addNode();
+		g.addNode();
+		g.addNode();
+		g.addNode();
+		g.addNode();
+		g.addNode();
+		
+		g.createEdge(0, 1, 140, false);
+		g.createEdge(1, 2, 10, false);
+		g.createEdge(2, 3, 1530, true);
+		g.createEdge(3, 5, 102, false);
+		g.createEdge(0, 4, 10163, true);
+		g.createEdge(4, 5, 104, false);
+		
+		ShortestWay w = g.getShortestPathDjikstra(0, 5);
+		System.out.println(w.totalCost);
+		for (Iterator<Integer> it = w.nodes.iterator(); it.hasNext();) {
+			int type = (int) it.next();
+			System.out.println(type);
+		}
+		
 	}
 }
