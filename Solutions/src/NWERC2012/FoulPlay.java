@@ -5,6 +5,9 @@ import io.Kattio;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
+/**
+ * @author David
+ */
 public class FoulPlay {
 	private static LinkedList<Integer>[] winTable;
 	private static boolean[] beatenTeams;

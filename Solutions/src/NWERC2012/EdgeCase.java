@@ -3,6 +3,9 @@ package NWERC2012;
 import io.Kattio;
 import java.math.BigInteger;
 
+/**
+ * @author David
+ */
 public class EdgeCase {
 
 	public static void main(String[] args) {
