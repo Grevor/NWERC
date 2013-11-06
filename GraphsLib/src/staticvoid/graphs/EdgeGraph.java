@@ -30,6 +30,7 @@ public class EdgeGraph implements Graph {
 	public ShortestWay getShortestPathDjikstra(int startID, int endID) {
 		double[] distance = new double[this.getNodeCount()];
 		Node[] prevNode = new Node[this.getNodeCount()];
+		boolean[] visited = new boolean[this.getNodeCount()];
 		DjikstraCmp cmp = new DjikstraCmp(distance);
 		
 		for (int i = 0; i < prevNode.length; i++) {
@@ -59,10 +60,13 @@ public class EdgeGraph implements Graph {
 			for(int i = 0; i < numEdges; i++) {
 				Edge currentEdge = allNodes.get(currentNode).getEdge(i);
 				if(distance[currentEdge.getTargetNode().nodeID] > 
-				distance[currentNode] + currentEdge.getWeight()) {
-					distance[currentEdge.getTargetNode().nodeID] = distance[currentNode] + currentEdge.getWeight(); 
+				distance[currentNode] + currentEdge.getWeight() && 
+				!visited[currentEdge.getTargetNode().nodeID]) {
+					distance[currentEdge.getTargetNode().nodeID] = 
+							distance[currentNode] + currentEdge.getWeight(); 
 					queue.add(currentEdge.targetNode.nodeID);
 					prevNode[currentEdge.targetNode.nodeID] = allNodes.get(currentNode);
+					visited[currentEdge.getTargetNode().nodeID] = true;
 				}
 			}
 		}
