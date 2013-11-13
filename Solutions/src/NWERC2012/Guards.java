@@ -29,11 +29,10 @@ public class Guards {
 		int[] hallIndices = new int[nHalls];
 		hallIndices[0] = entranceIndex;
 		Edge[] corridors = new Edge[nCorridors];
-		Edge[][] corridorsConnectedToHall = new Edge[nHalls][9];
 		for (int i = 0; i < corridors.length; i++) {
 			corridors[i] = new Edge(io.getInt(), io.getInt());
-			connectCorridorToHall(corridorsConnectedToHall, addHall(hallIndices, corridors[i].vertex1), corridors[i]);
-			connectCorridorToHall(corridorsConnectedToHall, addHall(hallIndices, corridors[i].vertex2), corridors[i]);
+			addHall(hallIndices, corridors[i].vertex1);
+			addHall(hallIndices, corridors[i].vertex2);
 		}
 		int nGuardsInCurrentWing = 0;
 		for (int i = 0; i < nWingExtensions; i++) {
@@ -46,20 +45,20 @@ public class Guards {
 			}
 		}
 		int nAdditionalGuards = 0;
-		while (!canSolveWing(hallIndices, corridors, corridorsConnectedToHall, nAdditionalGuards, 0)) {
+		while (!canSolveWing(hallIndices, corridors, nAdditionalGuards, 0)) {
 			nAdditionalGuards++;
 		}
 		guardCount += nGuardsInCurrentWing + nAdditionalGuards;
 	}
 	
-	private static boolean canSolveWing(int[] hallIndices, Edge[] corridors, Edge[][] corridorsConnectedToHall, int nGuards, int firstPossibleGuardIndex) {
+	private static boolean canSolveWing(int[] hallIndices, Edge[] corridors, int nGuards, int firstPossibleGuardIndex) {
 		if (nGuards == 0) {
 			return checkSolution(corridors);
 		}
 		for (int internalHallIndex = firstPossibleGuardIndex; internalHallIndex < hallIndices.length; internalHallIndex++) {
 			if (!guardInHall[hallIndices[internalHallIndex]]) {
 				guardInHall[hallIndices[internalHallIndex]] = true;
-				if (canSolveWing(hallIndices, corridors, corridorsConnectedToHall, nGuards-1, internalHallIndex+1)) {
+				if (canSolveWing(hallIndices, corridors, nGuards-1, internalHallIndex+1)) {
 					return true;
 				}
 				guardInHall[hallIndices[internalHallIndex]] = false;
@@ -74,15 +73,6 @@ public class Guards {
 				return false;
 		}
 		return true;
-	}
-
-	private static void connectCorridorToHall(Edge[][] corridorsConnectedToHall, int internalHallIndex, Edge e) {
-		for (int corridorIndex = 0; corridorIndex < 9; corridorIndex++) {
-			if (corridorsConnectedToHall[internalHallIndex][corridorIndex] == null) {
-				corridorsConnectedToHall[internalHallIndex][corridorIndex] = e;
-				return;
-			}
-		}
 	}
 	
 	private static int addHall(int[] hallIndices, int newHallIndex) {
