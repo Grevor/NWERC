@@ -40,6 +40,7 @@ import java.io.PrintWriter;
 import java.io.OutputStream;
 
 public class Kattio extends PrintWriter {
+	public Kattio() { this(System.in); }
 	public Kattio(InputStream i) {
 		super(new BufferedOutputStream(System.out));
 		r = new BufferedReader(new InputStreamReader(i));
