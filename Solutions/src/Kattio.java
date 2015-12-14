@@ -70,6 +70,14 @@ public class Kattio extends PrintWriter {
 	public String getWord() {
 		return nextToken();
 	}
+	
+    public String getWordLine() {
+    	peekToken();
+    	String line = this.line;
+    	st = null;
+    	token = null;
+    	return line;
+    }
 
 	private BufferedReader r;
 	private String line;
